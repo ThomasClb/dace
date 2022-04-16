@@ -1808,7 +1808,7 @@ std::istream& operator>>(std::istream &in, DA &da){
         }
 
         // read the istream until end string is found and put each line in the string vector (end condition taken from daceio.c)
-        for(getline(in, line); in.good() && (line.compare(4, 31, endstr, 0, 31) != 0); getline(in, line))
+        for(getline(in, line); in.good() && (endstr.compare(0, line.size(), line, 0, line.size()) != 0); getline(in, line)) // (line.compare(4, 31, endstr, 0, 31)
             strs.push_back(line);
 
         // convert string vector to DA

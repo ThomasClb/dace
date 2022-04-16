@@ -914,41 +914,44 @@ template<typename U> std::ostream& operator<<(std::ostream &out, const Algebraic
     return out;
 }
 
-template<typename U> std::istream& operator>>(std::istream &in, AlgebraicVector<U> &obj){
+template<typename U> std::istream& operator>>(std::istream& in, AlgebraicVector<U>& obj) {
 /*! Input a vector from a C++ input stream.
-   \param[in] in standard input stream.
-   \param[in] obj AlgebraicVector<U> to be read from the stream
-   \return Reference to input stream in.
+    \param[in] in standard input stream.
+    \param[in] obj AlgebraicVector<U> to be read from the stream
+    \return Reference to input stream in.
  */
     std::string init_line;
     size_t vec_size;
 
     // try to read the first line
     getline(in, init_line);
-    if(in.good()){
+    if (in.good()) {
         // retrieve the size of the vector to be read
         std::size_t found = init_line.find_first_of(' ');
-        std::string size_str(init_line,4,found-4);
-        if(!(std::istringstream(size_str) >> vec_size)) vec_size = 0;
-
+        std::string size_str(init_line, 4, found - 4);
+        if (!(std::istringstream(size_str) >> vec_size)) vec_size = 0;
         // resize the object to meet the size of the vector to be read
         obj.resize(vec_size);
 
         // fill the AlgebraicVector
         for (size_t i = 0; in.good() && (i < vec_size); i++) {
             in >> obj[i];
-            
-            // check the next character
-            if (in.peek() == '\n')       // the previous operator>> does not consume the \n character when an AlgebraicVector<T> (with T != DA) is considered
-                in.ignore();            // ignore the next character
+            if (in.peek() == '\n') getline(in, init_line);
         }
+
+        // check the next character
+        if (in.peek() == '\n')       // the previous operator>> does not consume the \n character when an AlgebraicVector<T> (with T != DA) is considered
+            in.ignore();            // ignore the next character
+
         // skip the line at the end of a AlgebraicVector (containing ]]])
         getline(in, init_line);
-    }else{
-        obj.resize(0);}
-
+    }
+    else {
+        obj.resize(0);
+    }
     return in;
 }
+
 
 template<typename T> std::string AlgebraicVector<T>::toString() const{
 /*! Convert the current AlgebraicVector<T> to string.

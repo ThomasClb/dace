@@ -186,7 +186,8 @@ namespace DACE{
         if(sev>=severity){
             throw *this;}
         else if(warning){
-            std::cerr << "Warning: " << msg << std::endl;}
+            // std::cerr << "Warning: " << msg << std::endl;
+        }
     }
 
     /********************************************************************************
