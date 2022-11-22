@@ -18,7 +18,7 @@ To use the DACE, we recommend using CMake. New DACE releases past version 2.0.1 
 ## Building the DACE
 To build your own version of the DACE library, simply clone this repository:
 ```
-git clone "https://github.com/dacelib/dace.git"
+git clone "https://github.com/ThomasClb/dace.git"
 ```
 Then create a build directory and run cmake, and then make to compile everything:
 ```
